@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Pagination from '../component/pagination/Pagination';
 
 const InterestsForm = () => {
@@ -14,12 +14,28 @@ const InterestsForm = () => {
 
 
 
-  const handleCheckboxChange = (event) => {
-      const { name, checked } = event.target;
-      setInterests((prevInterests) => ({
-          ...prevInterests,
-          [name]: checked,
-      }));
+  interface Interests {
+    shoes: boolean;
+    menTshirts: boolean;
+    makeup: boolean;
+    jewellery: boolean;
+    womenTshirts: boolean;
+    furniture: boolean;
+  }
+
+  interface CheckboxChangeEvent {
+    target: {
+      name: string;
+      checked: boolean;
+    };
+  }
+
+  const handleCheckboxChange = (event: CheckboxChangeEvent) => {
+    const { name, checked } = event.target;
+    setInterests((prevInterests: Interests) => ({
+      ...prevInterests,
+      [name]: checked,
+    }));
   };
 
   return (

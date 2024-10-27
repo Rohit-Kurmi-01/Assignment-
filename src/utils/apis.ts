@@ -1,8 +1,8 @@
 const ALL_USERS_KEY = 'users'
 
-export const getFromLocalStorage = (key:string): undefined|string =>{
+export const getFromLocalStorage = (key:string): unknown =>{
     const value =  localStorage.getItem(key )
-    return JSON.parse(value) ?? undefined
+    return value ? JSON.parse(value) : undefined
 }
 
 export const setToLocalStorage = (key:string,value:unknown) =>{
@@ -10,19 +10,19 @@ export const setToLocalStorage = (key:string,value:unknown) =>{
 }
 
 
-export const getAllUsers = ()=>{
-    return  getFromLocalStorage(ALL_USERS_KEY) ?? []
+export const getAllUsers = (): ISignUpPayload[] => {
+    return getFromLocalStorage(ALL_USERS_KEY) as ISignUpPayload[] ?? []
 }
 
 export const createUser = (payload:ISignUpPayload)=>{
-    const users :unknown[] = getAllUsers()
+    const users :ISignUpPayload[] = getAllUsers()
     users.push(payload)
     setToLocalStorage(ALL_USERS_KEY,users)
 }
 
 
-export const getAUserByEmail = (email:string)=>{
-    const users :unknown[] = getAllUsers()
+export const getAUserByEmail = (email:string): ISignUpPayload | undefined => {
+    const users :ISignUpPayload[] = getAllUsers()
     return users.find((user)=>user?.email == email)
 }
 

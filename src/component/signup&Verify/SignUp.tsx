@@ -69,7 +69,7 @@ const Login = () => {
   const [otp, setOtp] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
 
-  const handleMsg = (e) => {
+  const handleMsg = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     const serviceId = 'service_ql1wj01';
