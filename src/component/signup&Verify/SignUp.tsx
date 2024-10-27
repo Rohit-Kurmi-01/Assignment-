@@ -85,7 +85,7 @@ const Login = () => {
       .then((result) => {
         setIsOtpSent(true);
         console.log(result.text);
-        alert('OTP sent successfully to your email');
+        alert('OTP sent successfully to your email address');
       }, (error) => {
         console.log(error.text);
         alert('There was an error sending the OTP');
