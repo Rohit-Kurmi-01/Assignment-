@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Pagination from '../pagination/Pagination';
+import Pagination from '../component/pagination/Pagination';
 
 const InterestsForm = () => {
   const [interests, setInterests] = useState({
@@ -14,13 +14,13 @@ const InterestsForm = () => {
 
 
 
-const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-    setInterests((prevInterests) => ({
-        ...prevInterests,
-        [name]: checked,
-    }));
-};
+  const handleCheckboxChange = (event) => {
+      const { name, checked } = event.target;
+      setInterests((prevInterests) => ({
+          ...prevInterests,
+          [name]: checked,
+      }));
+  };
 
   return (
     <div className="flex justify-center items-center mt-10">

@@ -4,8 +4,7 @@ import "./App.css";
 import Layout from "./Layout/Layout";
 import Login from "./component/Login/Login";
 import SignUp from "./component/signup&Verify/SignUp";
-import SignUp_Verify from "./component/signup&Verify/SignUp_Verify";
-import InterestsForm from "./component/interest/InterestsForm";
+import InterestsForm from './page'
 
 const router = createBrowserRouter([
   {
@@ -20,10 +19,10 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
-      {
-        path: "verify",
-        element: <SignUp_Verify />,
-      },
+      // {
+      //   path: "verify",
+      //   element: <SignUp_Verify />,
+      // },
       {
         path: "interests",
         element: <InterestsForm />,

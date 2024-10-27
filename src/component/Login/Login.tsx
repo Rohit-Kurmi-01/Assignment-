@@ -1,8 +1,23 @@
 
 import InputField from '../input/Input'
 import Button from '../button/Button'
+import { FormEvent, useState } from 'react'
+import { signIn } from '../../utils/apis'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
+  const navigate = useNavigate()
+  const [email,setEmail] = useState<string>('')
+  const [password,setPassword] = useState('')
+  
+  const onLogin = (e:FormEvent<HTMLFormElement>)=>{
+    e.preventDefault()
+    const resp  = signIn({email,password})
+    if(resp.success){
+      navigate('/interests')
+    }
+  }
+
   return (
     <div className='flex justify-center items-center mt-10'>
        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md border border-b border-black">
@@ -13,12 +28,12 @@ export default function Login() {
           <p className='text-center mb-6 '>
           The next gen business marketplace
         </p>
-        <form>
+        <form onSubmit={onLogin}>
           <div className="mb-4">
-          <InputField label="UserName" type="text" id="Name" placeholder="Enter your Username"  />
+          <InputField label="Email" type="text" id="email" placeholder="Enter your email"  value={email} onChange={(e)=>setEmail(e.target.value as string)}/>
           </div>
           <div className="mb-4">
-          <InputField label="Password" type="Password" id="password" placeholder="Enter your password" />
+          <InputField label="Password" type="Password" id="password" placeholder="Enter your password" value={password} onChange={(e)=>setPassword(e.target.value as string)}/>
             
           </div>
           <Button type="submit">LOGIN</Button>

@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import InputField from "../input/Input";
 import Button from "../button/Button";
 import emailJs from '@emailjs/browser';
 import { Link, useNavigate } from "react-router-dom";
+import { onSignUp } from "../../utils/apis";
 
 function generateRandomOtp() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  return Math.floor(10000000 + Math.random() * 90000000).toString();
 }
 
 interface LoginVerifyProps {
   onVerify: string;
+  onSuccess:()=>void
 }
 
-function Login_Verify({ onVerify }: LoginVerifyProps) {
+function Login_Verify({ onVerify ,onSuccess}: LoginVerifyProps) {
   const [otpInput, setOtpInput] = useState(Array(8).fill(''));
+  const navigate = useNavigate()
 
-  const handleOtpChange = (value, index) => {
+  const handleOtpChange = (value:string, index:number) => {
     const newOtpInput = [...otpInput];
     newOtpInput[index] = value;
     setOtpInput(newOtpInput);
@@ -23,8 +26,11 @@ function Login_Verify({ onVerify }: LoginVerifyProps) {
 
   const verifyOtp = () => {
     if (otpInput.join('') === onVerify) {
+      onSuccess()
       alert('OTP verified successfully');
       // Redirect to signup completion or next steps
+      navigate('/login')
+      
     } else {
       alert('Invalid OTP');
     }
@@ -45,6 +51,7 @@ function Login_Verify({ onVerify }: LoginVerifyProps) {
               maxLength={1} 
               className="w-12 h-12 border border-gray-300 rounded text-center text-xl" 
               value={otpInput[index]}
+              
               onChange={(e) => handleOtpChange(e.target.value, index)}
             />
           ))}
@@ -61,7 +68,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
-  const navigate = useNavigate();
 
   const handleMsg = (e) => {
     e.preventDefault();
@@ -82,20 +88,23 @@ const Login = () => {
     };
 
     emailJs.send(serviceId, templateID, templateParams, publicKey)
-      .then((result) => {
+      .then(() => {
         setIsOtpSent(true);
-        console.log(result.text);
         alert('OTP sent successfully to your email address');
       }, (error) => {
-        console.log(error.text);
+        console.log(error);
         alert('There was an error sending the OTP');
       });
   };
 
+  const onSuccess = ()=>{
+    onSignUp({email,password,name})
+  } 
+
   return (
     <>
       {isOtpSent ? (
-        <Login_Verify onVerify={otp} />
+        <Login_Verify onVerify={otp} onSuccess={onSuccess}/>
       ) : (
         <div className="flex justify-center items-center mt-10">
           <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md border border-b border-black ">
